@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<v-toolbar app dense>
+		<v-toolbar dense>
 			<v-toolbar-title>Signup / Login example</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-toolbar-items>
