@@ -14,4 +14,12 @@ app.get('/status', (req, res) => {
     })
 })
 
+app.post('/signup', (req, res) => {
+    res.send(req.body)
+})
+
+app.post('/login', (req, res) => {
+    res.send(req.body)
+})
+
 app.listen(process.env.PORT || 5000)
