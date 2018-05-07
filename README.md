@@ -5,6 +5,8 @@ A simple signup / login interface - full stack
 - SERVER
     - bcrypt
     - mongodb client (mongodb runs at localhost)
+    - storing the signup datas + hashing the password
+    - users request gives back the _id, email and username and not the pw
 
 2018MAY06
 - CLIENT
