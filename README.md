@@ -1,6 +1,11 @@
 # signup_login
 A simple signup / login interface - full stack
 
+2018MAY07
+- SERVER
+    - bcrypt
+    - mongodb client (mongodb runs at localhost)
+
 2018MAY06
 - CLIENT
     - vue-cli webpack-simple
@@ -9,6 +14,8 @@ A simple signup / login interface - full stack
         - history mode
     - vuetify
         - basic UI with the routes
+    - axios
+        - post requests
 - SERVER
     - express
     - cors
