@@ -1,5 +1,9 @@
 # signup_login
 A simple signup / login interface - full stack
+2018MAY08
+- SERVER
+    -bcrypt compare passwords
+
 
 2018MAY07
 - SERVER

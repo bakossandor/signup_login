@@ -28,14 +28,14 @@ app.post('/signup', (req, res) => {
     });
 })
     
-
 app.post('/login', (req, res) => {
     const loginPW = req.body.password
-    res.send(req.body)
-    res.send(db.collection('users').findOne({"userName": req.body.userName}))
-    // bcrypt.compare(loginPW, hash).then(function(res) {
-    //     // res == true
-    // });
+    db.collection('users').findOne({"userName": req.body.userName}, {projection: {"password": 1, "_id": 0}}, (err, result) => {
+        bcrypt.compare(loginPW, result.password).then(function(r) {
+            res.send(r)
+        });
+        
+    })
 })
 
 MongoClient.connect('mongodb://localhost:27017', function (err, client) {
