@@ -4,11 +4,20 @@ const morgan = require('morgan')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
 const MongoClient = require('mongodb').MongoClient
+const jwt = require('jsonwebtoken')
+const config = require('./config/config')
 
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
+
+function jwtSignUser(user) {
+    const ONE_WEEK = 60 * 60* 24 * 7
+    return jwt.sign(user, config.authentication.jwtSecret, {
+        expiresIn: ONE_WEEK
+    })
+}
 
 const saltRounds = 10
 
@@ -29,12 +38,30 @@ app.post('/signup', (req, res) => {
 })
     
 app.post('/login', (req, res) => {
-    const loginPW = req.body.password
-    db.collection('users').findOne({"userName": req.body.userName}, {projection: {"password": 1, "_id": 0}}, (err, result) => {
-        bcrypt.compare(loginPW, result.password).then(function(r) {
-            res.send(r)
-        });
-        
+    const {userName, password} = req.body
+    db.collection('users').findOne({"userName": userName}, (error, result) => {
+        if (error) {
+            return res.status(500).send({message: "error"})
+        } else {
+            if (!result) {
+                return res.status(403).send({message: "wrong login credentials"})
+            } else {
+                bcrypt.compare(password, result.password, (err, bool) => {
+                    if (err) {
+                        return res.status(500).send({message: "error"})
+                    } else {
+                        if (!bool) {
+                            return res.status(403).send({message: "wrong login credentials"})
+                        } else {
+                            res.send({
+                                user: result,
+                                token: jwtSignUser(result)
+                            })
+                        }
+                    }
+                });
+            }
+        }
     })
 })
 

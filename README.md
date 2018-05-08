@@ -2,8 +2,8 @@
 A simple signup / login interface - full stack
 2018MAY08
 - SERVER
-    -bcrypt compare passwords
-
+    - bcrypt compare passwords
+    - jsonwebtoken - sending the token to the user
 
 2018MAY07
 - SERVER
