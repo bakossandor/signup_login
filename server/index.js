@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt')
 const MongoClient = require('mongodb').MongoClient
 const jwt = require('jsonwebtoken')
 const config = require('./config/config')
-
 const app = express()
+
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
@@ -22,9 +22,17 @@ function jwtSignUser(user) {
 const saltRounds = 10
 
 app.get('/users', (req, res) => {
-    db.collection('users').find({}).project({password: 0}).toArray((err, result) => {
-        res.send(result);
-    })
+    const token = req.headers.authorization
+    console.log(token)
+    jwt.verify(token, config.authentication.jwtSecret, (err, decoded) => {
+        if (err) {
+            res.status(403).send({message: "invalid token"})
+        } else {
+            db.collection('users').find({}).project({password: 0}).toArray((err, result) => {
+                res.send(result);
+            })
+        }
+    });
 })
 
 app.post('/signup', (req, res) => {
@@ -54,7 +62,7 @@ app.post('/login', (req, res) => {
                             return res.status(403).send({message: "wrong login credentials"})
                         } else {
                             res.send({
-                                user: result,
+                                user: result.userName,
                                 token: jwtSignUser(result)
                             })
                         }
