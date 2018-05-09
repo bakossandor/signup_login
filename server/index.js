@@ -24,15 +24,15 @@ const saltRounds = 10
 app.get('/users', (req, res) => {
     const token = req.headers.authorization
     console.log(token)
-    jwt.verify(token, config.authentication.jwtSecret, (err, decoded) => {
-        if (err) {
-            res.status(403).send({message: "invalid token"})
-        } else {
+    // jwt.verify(token, config.authentication.jwtSecret, (err, decoded) => {
+    //     if (err) {
+    //         res.status(403).send({message: "invalid token"})
+    //     } else {
             db.collection('users').find({}).project({password: 0}).toArray((err, result) => {
                 res.send(result);
             })
-        }
-    });
+    //     }
+    // });
 })
 
 app.post('/signup', (req, res) => {

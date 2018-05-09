@@ -1,5 +1,10 @@
 # signup_login
 A simple signup / login interface - full stack
+
+2018MAY09
+- CLIENT
+    - users table get request with axios (need to implement the token usage to this site)
+    
 2018MAY08
 - SERVER
     - bcrypt compare passwords
