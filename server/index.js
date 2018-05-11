@@ -24,15 +24,15 @@ const saltRounds = 10
 app.get('/users', (req, res) => {
     const token = req.headers.authorization
     console.log(token)
-    // jwt.verify(token, config.authentication.jwtSecret, (err, decoded) => {
-    //     if (err) {
-    //         res.status(403).send({message: "invalid token"})
-    //     } else {
+    jwt.verify(token, config.authentication.jwtSecret, (err, decoded) => {
+        if (err) {
+            res.status(403).send({message: "invalid token"})
+        } else {
             db.collection('users').find({}).project({password: 0}).toArray((err, result) => {
                 res.send(result);
             })
-    //     }
-    // });
+        }
+    });
 })
 
 app.post('/signup', (req, res) => {
@@ -46,6 +46,7 @@ app.post('/signup', (req, res) => {
 })
     
 app.post('/login', (req, res) => {
+    console.log(req.body)
     const {userName, password} = req.body
     db.collection('users').findOne({"userName": userName}, (error, result) => {
         if (error) {
@@ -61,9 +62,10 @@ app.post('/login', (req, res) => {
                         if (!bool) {
                             return res.status(403).send({message: "wrong login credentials"})
                         } else {
+                            const passToToken = {data: result.userName}
                             res.send({
                                 user: result.userName,
-                                token: jwtSignUser(result)
+                                token: jwtSignUser(passToToken)
                             })
                         }
                     }

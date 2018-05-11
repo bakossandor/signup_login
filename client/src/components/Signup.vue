@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 export default {
     data() {
         return {
@@ -48,16 +48,10 @@ export default {
     },
     methods: {
         submit() {
-            axios.post('http://localhost:5000/signup', this.auth)
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+           this.$store.dispatch('signup', this.auth)
         }
     }
-};
+}
 </script>
 
 <style lang='sass'>

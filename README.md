@@ -1,9 +1,15 @@
 # signup_login
 A simple signup / login interface - full stack
+
+2018MAY11
+- CLIENT
+    - route guards
+    - nav items (need to debugg some)
+    - localstorage
+
 2018MAY10
 - CLIENT
     - vuex
-
 
 2018MAY09
 - CLIENT

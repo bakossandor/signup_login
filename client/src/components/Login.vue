@@ -41,14 +41,16 @@ export default {
 	},
 	methods: {
 		login() {
-			axios.post('http://localhost:5000/login', this.auth)
-            .then(res => {
-                console.log(res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+			this.$store.dispatch('login', this.auth)
 		}
+	},
+	created() {
+		const usernName = this.$store.state.userName
+            if (localStorage.getItem("tokenExp") >= new Date()) {
+                console.log("failed to auto log in")
+            } else if (localStorage.getItem("tokenExp") <= new Date()) {
+                this.router.push(`/user/${usernName}`)
+            }
 	}
 };
 </script>

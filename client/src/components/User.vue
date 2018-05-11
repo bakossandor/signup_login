@@ -30,7 +30,9 @@ export default {
 		}
 	},
 	created() {
-		axios.get('http://localhost:5000/users')
+		const token = this.$store.state.idToken
+		console.log("toke", token);
+		axios.get('http://localhost:5000/users', {headers: { Authorization: token }})
             .then(res => {
 				this.users = res.data
                 console.log(res.data)
