@@ -39,8 +39,12 @@ app.post('/signup', (req, res) => {
     bcrypt.hash(req.body.password, saltRounds).then(function(hash) {
         const obj = req.body
         obj.password = hash
-        db.collection('users').save(obj, (err, result) => {
-            res.json(result)
+        db.collection('users').insertOne(obj, (err, result) => {
+            if (err) {
+                res.status(500).send({message: "cannot sign up"});
+            } else {
+                res.json(result)
+            }
         })
     });
 })

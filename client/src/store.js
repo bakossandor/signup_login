@@ -20,16 +20,9 @@ export default new Vuex.Store({
         signup({commit}, authData) {
             axios.post('http://localhost:5000/signup', authData)
             .then(res => {
-                console.log(res.data);
-                commit("authUser", {
-                    token: res.data.token,
-                    userName: res.data.user
-                });
-                const tokenExp = new Date(1000 * JSON.parse(atob(res.data.token.split('.')[1])).exp)
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("tokenExp", tokenExp);
-                localStorage.setItem("usernName", JSON.parse(atob(res.data.token.split('.')[1])).data)
-                router.push("/user/" + state.userName)
+
+                    router.push("/login")
+                
             })
             .catch(err => {
                 console.log(err)
@@ -38,17 +31,15 @@ export default new Vuex.Store({
         login({commit}, authData) {
             axios.post('http://localhost:5000/login', authData)
             .then(res => {
-                console.log(res.data);
                 commit("authUser", {
                     token: res.data.token,
                     userName: res.data.user
                 });
-                console.log(new Date(1000 * JSON.parse(atob(res.data.token.split('.')[1])).exp));
                 const tokenExp = new Date(1000 * JSON.parse(atob(res.data.token.split('.')[1])).exp)
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("tokenExp", tokenExp);
                 localStorage.setItem("usernName", JSON.parse(atob(res.data.token.split('.')[1])).data)
-                router.push("/user/" + state.userName)
+                router.push("/user")
             })
             .catch(err => {
                 console.log(err)

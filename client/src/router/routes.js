@@ -7,7 +7,7 @@ export const routes = [
 	{path: '/signup', component: Signup, name: "signup"},
 	{path: '/login', component: Login, name: "login"},
 	{
-		path: '/user/:id', 
+		path: '/user', 
 		component: User, 
 		name: "user",
 		beforeEnter(to, from, next) {

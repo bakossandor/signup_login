@@ -1,6 +1,13 @@
 # signup_login
 A simple signup / login interface - full stack
 
+to run this - you should need to install mongodb locally - the express server connect ot a local database
+
+2018MAY12
+- CLIENT
+    - making minor changes
+    - the app is 90 % oparateble
+
 2018MAY11
 - CLIENT
     - route guards

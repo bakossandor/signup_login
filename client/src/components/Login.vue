@@ -45,12 +45,14 @@ export default {
 		}
 	},
 	created() {
-		const usernName = this.$store.state.userName
-            if (localStorage.getItem("tokenExp") >= new Date()) {
-                console.log("failed to auto log in")
-            } else if (localStorage.getItem("tokenExp") <= new Date()) {
-                this.router.push(`/user/${usernName}`)
-            }
+		if (new Date(localStorage.getItem("tokenExp")) <= new Date()) {
+			console.log("failed to auto log in")
+		} else if (new Date(localStorage.getItem("tokenExp")) >= new Date()) {
+			console.log("else")
+			this.$router.push({path: "/user"})
+        } else {
+			
+		}
 	}
 };
 </script>
